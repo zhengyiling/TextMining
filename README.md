@@ -20,3 +20,7 @@ Use topfeatures() show out the top words in the dataset;
 Generate N-grams;
 Calculate the term frequence and document frequence;
 Shrink data, train and test datasets.
+
+# Summary 
+By analyzing these two data, I understood the basic operation of text mining, like create corpus, token the dataset, generate the document frequency matrix, find the keywords, and plot the word cloud picture and network between them.
+The statistical and sentiment analysis of text mining are very useful to help people quickly get the information from the texts.
