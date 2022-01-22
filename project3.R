@@ -3,12 +3,12 @@ library(quanteda)
 library(readtext)
 
 #1
-grimms<-texts(readtext("http://www.gutenberg.org/files/2591/2591-0.txt"))
+grimms <- texts(readtext("http://www.gutenberg.org/files/2591/2591-0.txt"))
 View(grimms)
 
-grimms.corpus<-corpus(grimms,docvars = data.frame(party = names(grimms)))
+grimms.corpus <- corpus(grimms, docvars = data.frame(party = names(grimms)))
 summary(grimms.corpus)
-docnames(grimms.corpus)<-c("Grimms' Fairy Tale")
+docnames(grimms.corpus) <- c("Grimms' Fairy Tale")
 summary(grimms.corpus)
 
 grimms.tokens <- tokens(grimms.corpus, what = "word", 
@@ -18,7 +18,7 @@ head(grimms.tokens)
 grimms.tokens.st <- tokens_select(grimms.tokens, stopwords('en'), selection = 'remove')
 head(grimms.tokens.st[1])
 
-grimms.tokens.dfm<-dfm(grimms.tokens,tolower = F)
+grimms.tokens.dfm <- dfm(grimms.tokens,tolower = F)
 textplot_wordcloud(grimms.tokens.dfm, max_words = 200)
 
 grimms_kw <- kwic(grimms.tokens.st, 'fox')
@@ -32,18 +32,18 @@ dim(grimms_kw1)
 library(xtable)
 View(grimms_kw)
 
-ngram<-tokens_ngrams(grimms.tokens.st, n = 2)
+ngram <- tokens_ngrams(grimms.tokens.st, n = 2)
 summary(ngram)
 head(ngram[[1]], 10)
 
-grimms_dfm_st<-dfm(grimms.tokens.st)
+grimms_dfm_st <- dfm(grimms.tokens.st)
 ndoc(grimms_dfm_st)
 nfeat(grimms_dfm_st)
 head(grimms_dfm_st)
 View(grimms_dfm_st[,1:50])
 
 topfeatures(grimms_dfm_st)
-prop_grimms_dfm_st<- dfm_weight(grimms_dfm_st, scheme  = "prop")
+prop_grimms_dfm_st <- dfm_weight(grimms_dfm_st, scheme  = "prop")
 topfeatures(prop_grimms_dfm_st)
 textplot_wordcloud(grimms_dfm_st, max_words = 10)
 textplot_wordcloud(grimms_dfm_st, max_words = 100)
@@ -56,43 +56,43 @@ dist <- textstat_dist(grimms_dfm_st)
 clust <- hclust(dist)
 plot(clust, xlab = "Distance", ylab = NULL)
 
-#meaningless calculation
-tfidf_grimms_dfm_st<-dfm_tfidf(grimms_dfm_st)
+#meaningless calculation?
+tfidf_grimms_dfm_st <- dfm_tfidf(grimms_dfm_st)
 topfeatures(tfidf_grimms_dfm_st)
 long_grimms_dfm_st <- dfm_select(grimms_dfm_st, min_nchar = 5)
 nfeat(long_grimms_dfm_st)
-trim_grimms<-dfm_trim(grimms_dfm_st, min_count = 20)
+trim_grimms <- dfm_trim(grimms_dfm_st, min_count = 20)
 ndoc(trim_grimms)
 nfeat(trim_grimms)
 
-hp_grimms<-dfm_trim(grimms_dfm_st, min_docfreq=.5)
+hp_grimms <- dfm_trim(grimms_dfm_st, min_docfreq=.5)
 nfeat(hp_grimms)
 topfeatures((hp_grimms))
 
 
 
 #2
-emotion<-read.csv(file.choose(), stringsAsFactors = FALSE)
+emotion <- read.csv(file.choose(), stringsAsFactors = FALSE)
 View(emotion)
 summary(emotion)
 head(emotion)
 
-emotion<-emotion[,1:2]
-names(emotion)<-c("Text", "Label")
+emotion <- emotion[,1:2]
+names(emotion) <- c("Text", "Label")
 View(emotion)
 
-emotion.corpus<-corpus(emotion$Text)
+emotion.corpus <- corpus(emotion$Text)
 str(emotion.corpus)
 emotion.corpus$documents$texts
 length(which(!complete.cases(emotion)))
 
-emotion$Label<-as.factor(emotion$Label)
+emotion$Label <- as.factor(emotion$Label)
 table(emotion$Label)
 prop.table(table(emotion$Label))
 
 emotion$Text[15]
 nchar(emotion$Text[15])
-emotion$TextLength<-nchar(emotion.corpus$documents$texts)
+emotion$TextLength <- nchar(emotion.corpus$documents$texts)
 summary(emotion$TextLength)
 
 library(ggplot2)
@@ -110,8 +110,8 @@ set.seed(32984)
 indexes <- createDataPartition(emotion$Label, times = 1,
                                p = 0.7, list = FALSE)
 
-train<-emotion[indexes,]
-test<-emotion[-indexes,]
+train <- emotion[indexes,]
+test <- emotion[-indexes,]
 table(train$Label)
 prop.table(table(train$Label))
 table(test$Label)
